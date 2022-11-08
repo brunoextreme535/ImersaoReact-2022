@@ -33,7 +33,7 @@ const StyledHeader = styled.div`
     border-radius: 50px;
   }
   .user-info {
-    margin-top: 70px;
+    margin-top: 75px;
     display: flex;
     align-items: center;
     width: 100%;
