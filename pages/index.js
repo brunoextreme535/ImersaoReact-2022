@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import config from "../config.json";
 import Menu from "../src/components/menu/Menu";
-import { CSSReset } from "../src/components/CSSReset";
 import { StyledTimeline } from "../src/components/Timeline";
 
 function HomePage() {
@@ -11,7 +10,6 @@ function HomePage() {
 
   return (
     <>
-      <CSSReset />
       <div
         style={{
           display: "flex",
@@ -33,6 +31,8 @@ function HomePage() {
 export default HomePage;
 
 const StyledHeader = styled.div`
+  background-color: ${({ theme }) => theme.backgroundLevel1};
+
   img {
     width: 80px;
     height: 80px;
