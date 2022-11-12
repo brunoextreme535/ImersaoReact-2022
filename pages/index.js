@@ -95,7 +95,7 @@ function Header() {
 
 function Timeline({ searchValue, ...props }) {
   const playlistNames = Object.keys(props.playlists);
-  console.log(props.playlists);
+
 
   return (
     <StyledTimeline>
