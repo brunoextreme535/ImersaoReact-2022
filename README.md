@@ -5,7 +5,7 @@
 Seja bem vindo ao projeto do Aluratube!!! Passos fundamentais:
 - Marque esse projeto com uma estrela
 - Imersão React Next.js
-- Faça o deploy na [Vercel](https://vercel.com/dashboard) e compartilhe!
+- Acesse o meu deply na [Vercel](https://imersaoreact2022.vercel.app/) e compartilhe!
 - Faça o BackEnd na [Supabase](https://app.supabase.com/) e se divirta!
 
 ## Imagem do projeto base:
