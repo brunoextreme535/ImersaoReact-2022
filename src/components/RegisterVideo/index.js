@@ -57,7 +57,7 @@ export default function RegisterVideo() {
               title: formRegister.values.title,
               url: formRegister.values.url,
               thumb: getThumbnail(formRegister.values.url),
-              playlists: "jogos"
+              playlist: "jogos"
             })
             .then((event) => {
               console.log(event)

@@ -13,13 +13,15 @@ function HomePage() {
   React.useEffect(() => {
     service.getAllVideos().then((dados) => {
       // Forma imutável
-      const newPlaylists = { ...playlists };
+      const newPlaylists = {};
       dados.data.forEach((video) => {
-        if (!newPlaylists[video.playlist]) {
+        if (!newPlaylists[video.playlist])
           newPlaylists[video.playlist] = [];
-        }
-        newPlaylists[video.playlist]?.push(video);
-      });
+          newPlaylists[video.playlist] = [
+            video,
+            ...newPlaylists[video.playlist],
+          ];
+        });
       setPlaylists(newPlaylists);
     });
   }, []);
@@ -93,6 +95,7 @@ function Header() {
 
 function Timeline({ searchValue, ...props }) {
   const playlistNames = Object.keys(props.playlists);
+  console.log(props.playlists);
 
   return (
     <StyledTimeline>
