@@ -3,10 +3,26 @@ import styled from "styled-components";
 import config from "../config.json";
 import Menu from "../src/components/menu/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
+import videoServices from "../src/services/videoService";
 
 function HomePage() {
-  // const valueFromFilter = "Angular";
+  const service = videoServices();
   const [valueFromFilter, setValueFromFilter] = React.useState("");
+  const [playlists, setPlaylists] = React.useState({});
+
+  React.useEffect(() => {
+    service.getAllVideos().then((dados) => {
+      // Forma imutável
+      const newPlaylists = { ...playlists };
+      dados.data.forEach((video) => {
+        if (!newPlaylists[video.playlist]) {
+          newPlaylists[video.playlist] = [];
+        }
+        newPlaylists[video.playlist]?.push(video);
+      });
+      setPlaylists(newPlaylists);
+    });
+  }, []);
 
   return (
     <>
@@ -18,9 +34,12 @@ function HomePage() {
           // backgroundColor: "red",>
         }}
       >
-        <Menu valueFromFilter={valueFromFilter} setValueFromFilter={setValueFromFilter}/>
+        <Menu
+          valueFromFilter={valueFromFilter}
+          setValueFromFilter={setValueFromFilter}
+        />
         <Header />
-        <Timeline searchValue={valueFromFilter} playlists={config.playlist}>
+        <Timeline searchValue={valueFromFilter} playlists={playlists}>
           Content
         </Timeline>
       </div>
@@ -52,14 +71,14 @@ const StyledBanner = styled.div`
   background-color: blue;
   background-image: url(${({ bg }) => bg});
   background-position: center;
-  /* background-image: url(${config.bg}); -> para configs padronizadas e globais*/ 
+  /* background-image: url(${config.bg}); -> para configs padronizadas e globais*/
   height: 230px;
-  `; 
+`;
 
 function Header() {
   return (
     <StyledHeader>
-      <StyledBanner bg={config.bg}/>
+      <StyledBanner bg={config.bg} />
       {/* <img src="banner" /> */}
       <section className="user-info">
         <img src={`https://github.com/${config.github}.png`} />
@@ -72,7 +91,7 @@ function Header() {
   );
 }
 
-function Timeline({searchValue, ...props}) {
+function Timeline({ searchValue, ...props }) {
   const playlistNames = Object.keys(props.playlists);
 
   return (
@@ -83,18 +102,20 @@ function Timeline({searchValue, ...props}) {
           <section key={playlistName}>
             <h2>{playlistName}</h2>
             <div>
-              {videos.filter((video) => {
-                const titleNormalized = video.title.toLowerCase();
-                const searchValueNormalized = searchValue.toLowerCase();
-                return titleNormalized.includes(searchValueNormalized)
-              }).map((video) => {
-                return (
-                  <a key={video.url} href={video.url}>
-                    <img src={video.thumb} />
-                    <span>{video.title}</span>
-                  </a>
-                );
-              })}
+              {videos
+                .filter((video) => {
+                  const titleNormalized = video.title.toLowerCase();
+                  const searchValueNormalized = searchValue.toLowerCase();
+                  return titleNormalized.includes(searchValueNormalized);
+                })
+                .map((video) => {
+                  return (
+                    <a key={video.url} href={video.url}>
+                      <img src={video.thumb} />
+                      <span>{video.title}</span>
+                    </a>
+                  );
+                })}
             </div>
           </section>
         );
